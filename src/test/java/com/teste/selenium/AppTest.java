@@ -22,7 +22,7 @@ public class AppTest {
 
     @BeforeAll
     public static void setUp() {
-        System.setProperty("webdriver.chrome.driver", "/workspaces/TesteSelenium/msedgedriver");
+        System.setProperty("webdriver.chrome.driver", "chromedriver");
         driver = new ChromeDriver();
     }
 
@@ -33,10 +33,20 @@ public class AppTest {
         // 2 | setWindowSize | 974x1032 |
         driver.manage().window().setSize(new Dimension(974, 1032));
         // 3 | click | linkText=By Name |
-        driver.findElement(By.linkText("By Name")).click();
+        // driver.findElement(By.linkText("By Name")).click();
+	driver.findElement(By.xpath("html/body/div[1]/nav/ul[1]/li[2]/ul/li[2]/ul/li[3]/a"));
         // 4 | click | linkText=Bulbasaur |
-        driver.findElement(By.linkText("Bulbasaur")).click();
-        assertTrue(driver.getCurrentUrl() == "ss");
+        // driver.findElement(By.linkText("Bulbasaur")).click();
+	driver.findElement(By.cssSelector("h1")).getText();
+
+	String jpnOriginalName = driver.findElement(By.cssSelector("spantitle='Bulbasaur (Pokémon)'] b")).getText();
+	assertTrue(jpnOriginalName == "フシギダネ");
+
+	String originalName = driver.findElement(By.cssSelector("//*[@id='mw-content-text']/div/table[2]/tbody/tr[1]/td/table/tbody/tr[1]/td/table/tbody/tr/td[2]/i")).getText();
+	assertTrue(originalName == "Fushigidane");
+
+	assertTrue(driver.getCurrentUrl() == "https://bulbapedia.bulbagarden.net/wiki/Bulbasaur_(Pokémon)");
+ 
     }
 
     @AfterAll
@@ -44,3 +54,5 @@ public class AppTest {
         driver.quit();
     }
 }
+
+
